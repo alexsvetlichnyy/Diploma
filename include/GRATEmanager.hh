@@ -63,7 +63,7 @@ class GRATEmanager
   inline G4bool   WritePseudorapidity() {return wP;};
   inline InitialConditions GetInitialContidions() {return *InCond;};
   inline G4double GetCriticalDistance() {return CritDist;}
-  inline G4double GetAngle() {return CLHEP::pi*angle/180;}
+  inline G4double GetAngle() {return CLHEP::pi*angle/180;} //Left for the future development of polarized beams
   inline G4bool ToFileOrNot() {return InFileOrNot;}
 
 

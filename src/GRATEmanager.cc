@@ -78,10 +78,7 @@ GRATEmanager::GRATEmanager()
 
   std::cout<<"Write coordinates of nucleons in the text file or not (one event)? (1 - yes, 0 - no): ";
   std::cin >> InFileOrNot;
-  if(InFileOrNot){
-    std::cout<<"Rotate the nucleus from side A about the axis Z? ('psi' in degrees - yes, 0 - no): ";
-    std::cin >> angle;
-  }
+
 
   if(!InFileOrNot){
     std::cout<<"Write momentum of each fragment?  (1 - yes, 0 - no) ";

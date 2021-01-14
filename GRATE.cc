@@ -253,9 +253,6 @@ for(G4int count=0;count<histoManager.GetIterations() ;count++){
   for(G4int iArray = 0; iArray < nucleons->GetEntries(); iArray++){
     TGlauNucleon *nucleon=(TGlauNucleon*)(nucleons->At(iArray));
     if(nucleon->IsSpectator() && nucleon->IsInNucleusA()){A+=1;}
-    if(nucleon->IsSpectator() && (histoManager.ToFileOrNot()) && nucleon->IsInNucleusA()){
-      ((TGlauNucleon*)nucleons->At(iArray))->RotateXYZ_3D(0, 0, histoManager.GetAngle());
-    }
     if(nucleon->IsSpectator() && nucleon->IsInNucleusB()){Ab+=1;}
   }
 
