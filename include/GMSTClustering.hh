@@ -97,7 +97,7 @@ class GMSTClustering{
 	~GMSTClustering();
 
 	public:
-	inline G4double SetCD(G4double CD_in) {CritDist = CD_in;}
+	inline void SetCD(G4double CD_in) {CritDist = CD_in;}
 	Graph ClusterToGraph(TObjArray* nucleons, G4double A);
 
 	void GetClusters(TObjArray* nucleons, GMSTClusterVector& output_vector, GMSTClusterVector& output_vector_B);

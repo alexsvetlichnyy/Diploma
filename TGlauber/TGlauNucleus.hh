@@ -63,8 +63,8 @@ class TGlauNucleus : public TNamed
     Double_t   fXRot;                //!Angle around X axis for nucleus
     Double_t   fYRot;                //!Angle around Y axis for nucleus
     Double_t   fZRot;                //!Angle around Z axis for nucleus
-    Double_t   fHe3Arr[6000][3][3];  //!Array of events, 3 nucleons, 3 coordinates
-    Int_t      fHe3Counter;          //!Event counter
+    Double_t   fNucArr[6000][20][3]; //!Array of events (max 6000), up to 20 nucleons (only for small nuclei), 3 coordinates
+    Int_t      fNucCounter;          //!Event counter
     TBits     *fIsUsed;              //!Bits for lattice use  
     Double_t   fMaxR;                //!maximum radius (15fm)
     void       Lookup(const char* name);
@@ -97,9 +97,6 @@ class TGlauNucleus : public TNamed
     Double_t   GetXRot()          const {return fXRot;}
     Double_t   GetYRot()          const {return fYRot;}
     Double_t   GetZRot()          const {return fZRot;}
-    void       SetPhiRot(Double_t phi) {fPhiRot = phi;}
-    void       SetThetaRot(Double_t theta) {fThetaRot = theta;}
-    void       SetAngles(Double_t phi, Double_t theta) {fPhiRot = phi; fThetaRot = theta;}
     void       SetA(Double_t ia, Double_t ia2=-1);
     void       SetBeta(Double_t b2, Double_t b4); 
     void       SetLattice(Int_t i)               {fLattice=i;}

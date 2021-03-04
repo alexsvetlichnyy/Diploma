@@ -48,6 +48,7 @@ class TGlauberMC : public TNamed
         Float_t Npart;       //Number of wounded (participating) nucleons in current event
         Float_t Ncoll;       //Number of binary collisions in current event
         Float_t Nhard;       //Number of hard collisions in current event (based on fHardFrac)
+        Float_t Nvoid;       //Number of collisions without nucleon-nucleon interaction
         Float_t B;           //[0,0,16] Impact parameter (b)
         Float_t BNN;         //[0,0,16] Average NN impact parameter
         Float_t Ncollpp;     //Ncoll pp
@@ -166,6 +167,8 @@ class TGlauberMC : public TNamed
     Int_t               GetNpartA()            const {return fEv.NpartA;}
     Int_t               GetNpartB()            const {return fEv.NpartB;}
     Int_t               GetNpartFound()        const {return fMaxNpartFound;}
+    Int_t               GetNvoid()             const {return fEv.Nvoid;}
+    Int_t               GetNhard()             const {return fEv.Nhard;}
     TF1*                GetXSectDist()         const {return fPTot;}
     TGlauNucleus*       GetNucleusA()                {return &fANucleus;}
     TGlauNucleus*       GetNucleusB()                {return &fBNucleus;}

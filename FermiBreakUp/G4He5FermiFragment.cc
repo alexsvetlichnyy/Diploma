@@ -77,7 +77,7 @@ G4He5FermiFragment::G4He5FermiFragment(const G4int anA, const G4int aZ, const G4
   G4double neutron_mass = G4ParticleTable::GetParticleTable()->GetIonTable()->GetIonMass(0,1); 
 
   G4double h5_mass = G4ParticleTable::GetParticleTable()->GetIonTable()->GetIonMass(2,5);
-  std::cout << "Hello from G4He5FermiFragment, Q = " << (h5_mass - alpha_mass - neutron_mass)/keV <<" keV"<< '\n';
+  //std::cout << "Hello from G4He5FermiFragment, Q = " << (h5_mass - alpha_mass - neutron_mass)/keV <<" keV"<< '\n';
 
   
 

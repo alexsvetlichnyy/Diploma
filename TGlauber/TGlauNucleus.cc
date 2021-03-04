@@ -67,15 +67,15 @@
 #include "TGlauNucleus.hh"
 
 
-//---------------------------------------------------------------------------------
-//ClassImp(TGlauNucleus)
-//---------------------------------------------------------------------------------
+// //---------------------------------------------------------------------------------
+// ClassImp(TGlauNucleus)
+// //---------------------------------------------------------------------------------
 TGlauNucleus::TGlauNucleus(const char* iname, Int_t iN, Double_t iR, Double_t ia, Double_t iw, TF1* ifunc) : 
   TNamed(iname,""),
   fN(iN),fR(iR),fA(ia),fW(iw),fR2(0),fA2(0),fW2(0),fBeta2(0),fBeta4(0),
   fMinDist(0.4),fNodeDist(0.0),fSmearing(0.0),fRecenter(1),fLattice(0),fSmax(99),
   fF(0),fTrials(0),fNonSmeared(0),fFunc1(ifunc),fFunc2(0),fFunc3(0),fNucleons(0),
-  fPhiRot(0),fThetaRot(0),fHe3Counter(-1),fIsUsed(0),fMaxR(14)
+  fPhiRot(0),fThetaRot(0),fNucCounter(-1),fIsUsed(0),fMaxR(14)
 {
   if (fN==0) {
     cout << "Setting up nucleus " << iname << endl;
@@ -129,10 +129,10 @@ void TGlauNucleus::Lookup(const char* name)
   else if (TString(name) == "He3")     {fN = 3;   fR = 0.00;       fA = 0.0000; fW =  0;       fF = 6;  fZ=1;} // read configurations from file
   else if (TString(name) == "H3")      {fN = 3;   fR = 0.00;       fA = 0.0000; fW =  0;       fF = 6;  fZ=2;} // read configurations from file
   else if (TString(name) == "He4")     {fN = 4;   fR = 0.00;       fA = 0.0000; fW =  0;       fF = 6;  fZ=2;} // read configurations from file
-  else if (TString(name) == "C")       {fN = 12;  fR = 2.608;      fA = 0.513;  fW = -0.051;   fF = 15; fZ=6;} // Harmonic oscillator parameterization  
-  else if (TString(name) == "Ofile")   {fN = 16;  fR = 2.608;      fA = 0.513;  fW = -0.051;   fF = 6;  fZ=8;} // read configurations from file
-  else if (TString(name) == "O")       {fN = 16;  fR = 2.608;      fA = 0.513;  fW = -0.051;   fF = 1;  fZ=8;} // WS parameterization
-  else if (TString(name) == "Oh")      {fN = 16;  fR = 1.833;      fA = 1.544;  fW =  0;       fF = 15; fZ=8;} // Harmonic oscillator parameterization
+  else if (TString(name) == "C")       {fN = 12;  fR = 2.608;      fA = 0.513;  fW = -0.051;   fF = 6;  fZ=6;} // read configurations from file  
+  else if (TString(name) == "O")       {fN = 16;  fR = 2.608;      fA = 0.513;  fW = -0.051;   fF = 6;  fZ=8;} // read configurations from file
+  else if (TString(name) == "Opar")    {fN = 16;  fR = 2.608;      fA = 0.513;  fW = -0.051;   fF = 1;  fZ=8;} // WS parameterization
+  else if (TString(name) == "Oho")     {fN = 16;  fR = 1.833;      fA = 1.544;  fW =  0;       fF = 15; fZ=8;} // Harmonic oscillator parameterization
   else if (TString(name) == "Al")      {fN = 27;  fR = 3.34;       fA = 0.580;  fW = 0.0;      fF = 8;  fZ=13; fBeta2=-0.448; fBeta4=0.239;}
   else if (TString(name) == "Si")      {fN = 28;  fR = 3.34;       fA = 0.580;  fW = -0.233;   fF = 1;  fZ=14;}
   else if (TString(name) == "Si2")     {fN = 28;  fR = 3.34;       fA = 0.580;  fW =  0;       fF = 8;  fZ=14; fBeta2=-0.478; fBeta4=0.250;}
@@ -145,8 +145,8 @@ void TGlauNucleus::Lookup(const char* name)
   else if (TString(name) == "Cu2")     {fN = 63;  fR = 4.20;       fA = 0.596;  fW =  0;       fF = 8;  fZ=29; fBeta2=0.162; fBeta4=-0.006;}  
   else if (TString(name) == "Cu2rw")   {fN = 63;  fR = 4.20;       fA = 0.596;  fW =  0;       fF = 14; fZ=29; fBeta2=0.162; fBeta4=-0.006; r0=1.01269; r1=-0.00298083; r2=-9.97222e-05;}  
   else if (TString(name) == "CuHN")    {fN = 63;  fR = 4.28;       fA = 0.5;    fW =  0;       fF = 1;  fZ=29;} // from arXiv:0904.4080v1
-  else if (TString(name) == "Br")      {fN = 79;  fR = 4.1629;     fA = 0.56;   fW =  0;       fF = 1;  fZ=35;} // from the ceiling 
-  else if (TString(name) == "Ag")      {fN = 109; fR = 4.5638;     fA = 0.53;   fW =  0;       fF = 1;  fZ=47;} // from the ceilingы
+  else if (TString(name) == "Br")      {fN = 79;  fR = 4.1629;     fA = 0.56;   fW =  0;       fF = 1;  fZ=35;} // from the ceiling
+  else if (TString(name) == "Ag")      {fN = 109; fR = 4.5638;     fA = 0.53;   fW =  0;       fF = 1;  fZ=47;} // from the ceiling
   else if (TString(name) == "Xe")      {fN = 129; fR = 5.36;       fA = 0.59;   fW =  0;       fF = 1;  fZ=54;} // adapted from arXiv:1703.04278
   else if (TString(name) == "Xes")     {fN = 129; fR = 5.42;       fA = 0.57;   fW =  0;       fF = 1;  fZ=54;} // scale from Sb (Antimony, A=122, r=5.32) by 1.019 = (129/122)**0.333
   else if (TString(name) == "Xe2")     {fN = 129; fR = 5.36;       fA = 0.59;   fW =  0;       fF = 8;  fZ=54; fBeta2=0.161; fBeta4=-0.003;} // adapted from arXiv:1703.04278 and Z. Physik (1974) 270: 113
@@ -344,8 +344,8 @@ Bool_t TGlauNucleus::TestMinDist(Int_t n, Double_t x, Double_t y, Double_t z) co
     Double_t yo=other->GetY();
     Double_t zo=other->GetZ();
     Double_t dist2 = (x-xo)*(x-xo)+
-		                 (y-yo)*(y-yo)+
-		                 (z-zo)*(z-zo);
+                     (y-yo)*(y-yo)+
+                     (z-zo)*(z-zo);
     if (dist2<md2) {
       return kFALSE;
     }
@@ -355,6 +355,7 @@ Bool_t TGlauNucleus::TestMinDist(Int_t n, Double_t x, Double_t y, Double_t z) co
 
 TVector3 &TGlauNucleus::ThrowNucleons(Double_t xshift)
 {
+
   if (fNucleons==0) {
     fNucleons=new TObjArray(fN);
     fNucleons->SetOwner();
@@ -379,7 +380,9 @@ TVector3 &TGlauNucleus::ThrowNucleons(Double_t xshift)
       }
     }
   }
+
  cmscheck: /* start over here in case shift was too large */
+
   fTrials = 0;
   fNonSmeared = 0;
   fPhiRot = gRandom->Rndm()*2*TMath::Pi();
@@ -388,8 +391,15 @@ TVector3 &TGlauNucleus::ThrowNucleons(Double_t xshift)
   fXRot = gRandom->Rndm()*2*TMath::Pi();
   fYRot = gRandom->Rndm()*2*TMath::Pi();
   fZRot = gRandom->Rndm()*2*TMath::Pi();
-  const Bool_t hulthen = (TString(GetName())=="dh" || TString(GetName())=="dhh");
-  const Bool_t helium3 = (TString(GetName())=="He3") || (TString(GetName())=="H3");
+
+  const Bool_t hulthen = (fF==3||fF==4);
+  TString tmpname(GetName());
+  Bool_t nucleonsfromfile = false;
+  if ((tmpname=="He3") || (tmpname=="H3") ||
+      (tmpname=="He4") || (tmpname=="C")   || 
+      (tmpname=="O"))
+    nucleonsfromfile = true;  
+  
   if (fN==1) { //special treatment for proton
     Double_t r = fFunc1->GetRandom();
     Double_t phi = gRandom->Rndm() * 2 * TMath::Pi();
@@ -398,10 +408,12 @@ TVector3 &TGlauNucleus::ThrowNucleons(Double_t xshift)
     TGlauNucleon *nucleon=(TGlauNucleon*)(fNucleons->At(0));
     nucleon->Reset();
     nucleon->SetXYZ(r * stheta * TMath::Cos(phi),
-		    r * stheta * TMath::Sin(phi),
-		    r * ctheta);
+        r * stheta * TMath::Sin(phi),
+        r * ctheta);
     fTrials = 1;
+
   } else if (fN==2 && hulthen) { //special treatment for Hulten
+
     Double_t r = fFunc1->GetRandom()/2;
     Double_t phi = gRandom->Rndm() * 2 * TMath::Pi();
     Double_t ctheta = 2*gRandom->Rndm() - 1;
@@ -414,61 +426,119 @@ TVector3 &TGlauNucleus::ThrowNucleons(Double_t xshift)
                      r * stheta * TMath::Sin(phi),
                      r * ctheta);
     nucleon2->Reset();
-    nucleon2->SetXYZ(-nucleon1->GetX(),
-                     -nucleon1->GetY(),
-                     -nucleon1->GetZ());
+    if (fF==4) { // place opposite of 1
+      nucleon2->SetXYZ(-nucleon1->GetX(),
+           -nucleon1->GetY(),
+           -nucleon1->GetZ());
+    } else {
+      r = fFunc1->GetRandom()/2;
+      phi = gRandom->Rndm() * 2 * TMath::Pi();
+      ctheta = 2*gRandom->Rndm() - 1;
+      stheta = TMath::Sqrt(1-ctheta*ctheta);
+      nucleon2->SetXYZ(r * stheta * TMath::Cos(phi),
+           r * stheta * TMath::Sin(phi),
+           r * ctheta);
+    }
     fTrials = 1;
-  } else if (helium3) { 
-    if (fHe3Counter == -1) {
+
+  } else if (fN > 2 && fN < 20 && nucleonsfromfile) { 
+
+    // if the first call, then read in the file configurations
+    if (fNucCounter == -1) {
       // read in the ascii file into the array and step through the counter
-      char filename[100] = "he3_plaintext.dat";
-      if ((TString(GetName())=="H3")) {
-        sprintf(filename,"h3_plaintext.dat");
+      char filename[100] = "foo.dat";
+      if (tmpname=="He3") {
+        sprintf(filename,"../TGlauber/he3_plaintext.dat");
+      } else if (tmpname=="H3") {
+        sprintf(filename,"../TGlauber/h3_plaintext.dat");
+      } else if (tmpname=="He4") {
+        sprintf(filename,"../TGlauber/he4_plaintext.dat");
+      } else if (tmpname=="C") {
+        sprintf(filename,"../TGlauber/carbon_plaintext.dat");
+      } else if (tmpname=="O") {
+        sprintf(filename,"../TGlauber/oxygen_plaintext.dat");
       }
-      cout << "Reading in the " << filename << " file upon initialization" << endl;
+      cout << "Reading in " << filename << " for nucleon configurations with fN = " << fN << endl;
       ifstream myfile;
       myfile.open(filename);
       if (!myfile) {
-        cout << "ERROR:  no file for He3/H3 found with name = " << filename << endl;
+        cout << "ERROR:  no file for nucleon configurations found with name = " << filename << endl;
         gSystem->Exit(123);
       }
-      cout << "Reading file for He3/H3 found with name = " << filename << endl;
+
       Int_t inputcounter = 0;
       while (myfile) {
-        if (inputcounter > 6000) break;
+        if (inputcounter > 5999) break;
         Double_t foo;
-        myfile >> fHe3Arr[inputcounter][0][0] >> fHe3Arr[inputcounter][0][1] >> fHe3Arr[inputcounter][0][2]
-               >> fHe3Arr[inputcounter][1][0] >> fHe3Arr[inputcounter][1][1] >> fHe3Arr[inputcounter][1][2]
-               >> fHe3Arr[inputcounter][2][0] >> fHe3Arr[inputcounter][2][1] >> fHe3Arr[inputcounter][2][2]
-               >> foo >> foo >> foo >> foo;
+  if (fN == 3) {
+    myfile >> fNucArr[inputcounter][0][0] >> fNucArr[inputcounter][0][1] >> fNucArr[inputcounter][0][2]
+     >> fNucArr[inputcounter][1][0] >> fNucArr[inputcounter][1][1] >> fNucArr[inputcounter][1][2]
+     >> fNucArr[inputcounter][2][0] >> fNucArr[inputcounter][2][1] >> fNucArr[inputcounter][2][2]
+     >> foo >> foo >> foo >> foo;
+  } else if (fN == 4) {
+    // no extra data with isospin information at the end of the nucleon configurations
+    myfile >> fNucArr[inputcounter][0][0] >> fNucArr[inputcounter][0][1] >> fNucArr[inputcounter][0][2]
+     >> fNucArr[inputcounter][1][0] >> fNucArr[inputcounter][1][1] >> fNucArr[inputcounter][1][2]
+     >> fNucArr[inputcounter][2][0] >> fNucArr[inputcounter][2][1] >> fNucArr[inputcounter][2][2]
+     >> fNucArr[inputcounter][3][0] >> fNucArr[inputcounter][3][1] >> fNucArr[inputcounter][3][2];
+  } else if (fN == 12) {
+    // no extra data with isospin information at the end of the nucleon configurations
+    // two extra words at the beginning --> foo foo
+    myfile >> foo >> foo 
+           >> fNucArr[inputcounter][0][0] >> fNucArr[inputcounter][0][1] >> fNucArr[inputcounter][0][2]
+     >> fNucArr[inputcounter][1][0] >> fNucArr[inputcounter][1][1] >> fNucArr[inputcounter][1][2]
+     >> fNucArr[inputcounter][2][0] >> fNucArr[inputcounter][2][1] >> fNucArr[inputcounter][2][2]
+     >> fNucArr[inputcounter][3][0] >> fNucArr[inputcounter][3][1] >> fNucArr[inputcounter][3][2]
+     >> fNucArr[inputcounter][4][0] >> fNucArr[inputcounter][4][1] >> fNucArr[inputcounter][4][2]
+     >> fNucArr[inputcounter][5][0] >> fNucArr[inputcounter][5][1] >> fNucArr[inputcounter][5][2]
+     >> fNucArr[inputcounter][6][0] >> fNucArr[inputcounter][6][1] >> fNucArr[inputcounter][6][2]
+     >> fNucArr[inputcounter][7][0] >> fNucArr[inputcounter][7][1] >> fNucArr[inputcounter][7][2]
+     >> fNucArr[inputcounter][8][0] >> fNucArr[inputcounter][8][1] >> fNucArr[inputcounter][8][2]
+     >> fNucArr[inputcounter][9][0] >> fNucArr[inputcounter][9][1] >> fNucArr[inputcounter][9][2]
+     >> fNucArr[inputcounter][10][0] >> fNucArr[inputcounter][10][1] >> fNucArr[inputcounter][10][2]
+     >> fNucArr[inputcounter][11][0] >> fNucArr[inputcounter][11][1] >> fNucArr[inputcounter][11][2];
+  } else if (fN == 16) {
+    // no extra data with isospin information at the end of the nucleon configurations
+    myfile >> fNucArr[inputcounter][0][0] >> fNucArr[inputcounter][0][1] >> fNucArr[inputcounter][0][2]
+     >> fNucArr[inputcounter][1][0] >> fNucArr[inputcounter][1][1] >> fNucArr[inputcounter][1][2]
+     >> fNucArr[inputcounter][2][0] >> fNucArr[inputcounter][2][1] >> fNucArr[inputcounter][2][2]
+     >> fNucArr[inputcounter][3][0] >> fNucArr[inputcounter][3][1] >> fNucArr[inputcounter][3][2]
+     >> fNucArr[inputcounter][4][0] >> fNucArr[inputcounter][4][1] >> fNucArr[inputcounter][4][2]
+     >> fNucArr[inputcounter][5][0] >> fNucArr[inputcounter][5][1] >> fNucArr[inputcounter][5][2]
+     >> fNucArr[inputcounter][6][0] >> fNucArr[inputcounter][6][1] >> fNucArr[inputcounter][6][2]
+     >> fNucArr[inputcounter][7][0] >> fNucArr[inputcounter][7][1] >> fNucArr[inputcounter][7][2]
+     >> fNucArr[inputcounter][8][0] >> fNucArr[inputcounter][8][1] >> fNucArr[inputcounter][8][2]
+     >> fNucArr[inputcounter][9][0] >> fNucArr[inputcounter][9][1] >> fNucArr[inputcounter][9][2]
+     >> fNucArr[inputcounter][10][0] >> fNucArr[inputcounter][10][1] >> fNucArr[inputcounter][10][2]
+     >> fNucArr[inputcounter][11][0] >> fNucArr[inputcounter][11][1] >> fNucArr[inputcounter][11][2]
+     >> fNucArr[inputcounter][12][0] >> fNucArr[inputcounter][12][1] >> fNucArr[inputcounter][12][2]
+     >> fNucArr[inputcounter][13][0] >> fNucArr[inputcounter][13][1] >> fNucArr[inputcounter][13][2]
+     >> fNucArr[inputcounter][14][0] >> fNucArr[inputcounter][14][1] >> fNucArr[inputcounter][14][2]
+     >> fNucArr[inputcounter][15][0] >> fNucArr[inputcounter][15][1] >> fNucArr[inputcounter][15][2];
+  }
         ++inputcounter;
-      }  
+      }
       myfile.close();
-      fHe3Counter=0;
+      fNucCounter=0;
     } // done reading in the file the first time
-    if (fHe3Counter > 5999) 
-      fHe3Counter = 0;
-    TGlauNucleon *nucleon1=(TGlauNucleon*)(fNucleons->At(0));
-    TGlauNucleon *nucleon2=(TGlauNucleon*)(fNucleons->At(1));
-    TGlauNucleon *nucleon3=(TGlauNucleon*)(fNucleons->At(2));
-    nucleon1->Reset();
-    nucleon1->SetXYZ(fHe3Arr[fHe3Counter][0][0],
-                     fHe3Arr[fHe3Counter][0][1],
-                     fHe3Arr[fHe3Counter][0][2]);
-    nucleon1->RotateXYZ(fPhiRot,fThetaRot);
-    nucleon2->Reset();
-    nucleon2->SetXYZ(fHe3Arr[fHe3Counter][1][0],
-                     fHe3Arr[fHe3Counter][1][1],
-                     fHe3Arr[fHe3Counter][1][2]);
-    nucleon2->RotateXYZ(fPhiRot,fThetaRot);
-    nucleon3->Reset();
-    nucleon3->SetXYZ(fHe3Arr[fHe3Counter][2][0],
-                     fHe3Arr[fHe3Counter][2][1],
-                     fHe3Arr[fHe3Counter][2][2]);
-    nucleon3->RotateXYZ(fPhiRot,fThetaRot);
-    ++fHe3Counter;
+
+    if (fNucCounter > 5999) 
+      fNucCounter = 0;
+
+    // change to loop over fN nucleons!
+    for (Int_t i = 0; i<fN; ++i) {
+      TGlauNucleon *nucleon=(TGlauNucleon*)(fNucleons->At(i));
+      nucleon->Reset();
+      nucleon->SetXYZ(fNucArr[fNucCounter][i][0],
+          fNucArr[fNucCounter][i][1],
+          fNucArr[fNucCounter][i][2]);
+      nucleon->RotateXYZ(fPhiRot,fThetaRot);
+    }
+
+    ++fNucCounter;
     fTrials = 1;
   } else { // all other nuclei 
+
     const Double_t startingEdge  = 20; // throw nucleons within a cube of this size (fm)
     const Double_t startingEdgeX = startingEdge + fNodeDist*gRandom->Rndm() - 0.5*fNodeDist;
     const Double_t startingEdgeY = startingEdge + fNodeDist*gRandom->Rndm() - 0.5*fNodeDist;
@@ -563,8 +633,8 @@ TVector3 &TGlauNucleus::ThrowNucleons(Double_t xshift)
             }
             const Double_t r2 = x*x + y*y + z*z;
             const Double_t r  = TMath::Sqrt(r2);
-	    if ((r>fMaxR)||(r2*gRandom->Rndm()>ff->Eval(r)))
-	      continue;
+      if ((r>fMaxR)||(r2*gRandom->Rndm()>ff->Eval(r)))
+        continue;
             if (fSmearing>0.0) {
               Int_t nAttemptsToSmear = 0;
               while (1) {
@@ -588,16 +658,16 @@ TVector3 &TGlauNucleus::ThrowNucleons(Double_t xshift)
             }
             fIsUsed->SetBitNumber(index);
           } /* end "grid/lattice mode" */
-	}
-	nucleon->SetXYZ(x,y,z);
-	if (fF==5||fF==7||fF==8||fF==14) 
-	  nucleon->RotateXYZ(fPhiRot,fThetaRot); // Uranium etc.
-	if (fNodeDist>0) {
-	  nucleon->RotateXYZ_3D(fXRot,fYRot,fZRot);
-	  break;
-	}
-	if (TestMinDist(i,x,y,z))
-	  break;
+  }
+  nucleon->SetXYZ(x,y,z);
+  if (fF==5||fF==7||fF==8||fF==14) 
+    nucleon->RotateXYZ(fPhiRot,fThetaRot); // Uranium etc.
+  if (fNodeDist>0) {
+    nucleon->RotateXYZ_3D(fXRot,fYRot,fZRot);
+    break;
+  }
+  if (TestMinDist(i,x,y,z))
+    break;
       }
     }
   }    
@@ -615,6 +685,7 @@ TVector3 &TGlauNucleus::ThrowNucleons(Double_t xshift)
   sumx = sumx/fN;
   sumy = sumy/fN;
   sumz = sumz/fN;
+
   static TVector3 finalShift;
   finalShift.SetXYZ(sumx,sumy,sumz);
   if (finalShift.Mag()>fSmax)
@@ -656,10 +727,10 @@ TVector3 &TGlauNucleus::ThrowNucleons(Double_t xshift)
   for (Int_t i = 0; i<fN; ++i) {
     TGlauNucleon *nucleon=(TGlauNucleon*)(fNucleons->At(i));
     nucleon->SetXYZ(nucleon->GetX()-fsumx + xshift,
-		    nucleon->GetY()-fsumy,
-		    nucleon->GetZ()-fsumz);
+        nucleon->GetY()-fsumy,
+        nucleon->GetZ()-fsumz);
   }
 
   return finalShift;
-}
 
+}

@@ -77,7 +77,7 @@ G4B9FermiFragment::G4B9FermiFragment(const G4int anA, const G4int aZ, const G4in
   G4double proton_mass = G4ParticleTable::GetParticleTable()->GetIonTable()->GetIonMass(1,1);
   
   G4double b9_mass = G4ParticleTable::GetParticleTable()->GetIonTable()->GetIonMass(5,9);
-  std::cout << "Hello from G4B9FermiFragment, Q = " << (b9_mass - 2.*alpha_mass - proton_mass)/keV <<" keV"<< '\n';
+  //std::cout << "Hello from G4B9FermiFragment, Q = " << (b9_mass - 2.*alpha_mass - proton_mass)/keV <<" keV"<< '\n';
 
 
   Masses.push_back(alpha_mass);

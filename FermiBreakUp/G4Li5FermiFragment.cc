@@ -75,7 +75,7 @@ G4Li5FermiFragment::G4Li5FermiFragment(const G4int anA, const G4int aZ, const G4
   G4double proton_mass = G4ParticleTable::GetParticleTable()->GetIonTable()->GetIonMass(1,1); 
 
   G4double li5_mass = G4ParticleTable::GetParticleTable()->GetIonTable()->GetIonMass(3,5);
-  std::cout << "Hello from G4Li5FermiFragment, Q = " << (li5_mass - alpha_mass - proton_mass)/keV <<" keV"<< '\n';
+ //std::cout << "Hello from G4Li5FermiFragment, Q = " << (li5_mass - alpha_mass - proton_mass)/keV <<" keV"<< '\n';
 
 
   Masses.push_back(alpha_mass);

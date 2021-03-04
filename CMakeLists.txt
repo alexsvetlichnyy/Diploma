@@ -39,16 +39,11 @@ include_directories(${PROJECT_SOURCE_DIR}/include
                     ${ROOT_INCLUDE_DIRS})
 add_subdirectory(TGlauber)
 link_directories(${ROOT_LIBRARY_DIR})
-file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc ${PROJECT_SOURCE_DIR}/FermiBreakUp/*.cc)
-file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh ${PROJECT_SOURCE_DIR}/FermiBreakUp/*.hh)
+file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc ${PROJECT_SOURCE_DIR}/FermiBreakUp/*.cc ${PROJECT_SOURCE_DIR}/Evaporation/src/*.cc ${PROJECT_SOURCE_DIR}/Fission/src/*.cc)
+file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh ${PROJECT_SOURCE_DIR}/FermiBreakUp/*.hh ${PROJECT_SOURCE_DIR}/Evaporation/include/*.hh ${PROJECT_SOURCE_DIR}/Fission/include/*.hh)
 
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
-#
-
-#add_library(TGlauNucleon SHARED ${PROJECT_SOURCE_DIR}/src/TGlauNucleon.cc ${PROJECT_SOURCE_DIR}/include/TGlauNucleon.hh)
-#add_library(TGlauNucleus SHARED ${PROJECT_SOURCE_DIR}/src/TGlauNucleus.cc ${PROJECT_SOURCE_DIR}/include/TGlauNucleus.hh)
-#add_library(TGlauberMC SHARED ${PROJECT_SOURCE_DIR}/src/TGlauberMC.cc ${PROJECT_SOURCE_DIR}/include/TGlauberMC.hh)
 add_executable(GRATE GRATE.cc ${sources} ${headers})
 #target_link_libraries(GRATE TGlauNucleon TGlauNucleus TGlauberMC ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} TGlauberLib)
 target_link_libraries(GRATE ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} TGlauberLib)

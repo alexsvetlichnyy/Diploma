@@ -7,7 +7,7 @@ ExcitationEnergy::ExcitationEnergy(G4int ExEnLabel_in, G4int initA_in): ExEnLabe
 ExEnLabel = ExEnLabel_in;
 initA = initA_in;
 
-G4cout<<"Excitation energy will be calculated with the "<<ExEnLabel_in<<" way"<<G4endl;
+G4cout<<"Excitation energy will be calculated with the "<<ExEnLabel_in<<" way  \r"<<G4endl;
 
     LowExEn = 0*initA;
     UpExEn = 100*initA;
@@ -15,7 +15,7 @@ G4cout<<"Excitation energy will be calculated with the "<<ExEnLabel_in<<" way"<<
 
     ParamFile.open("../src/CorrectedALADINParameters.dat");
     SetParametersCorrectedALADINFromFile();
-    SetParametersALADIN(8.13,0.07,2);
+    SetParametersALADIN(11,0.07,2);//8.13;0.07;2
 }
 
 ExcitationEnergy::~ExcitationEnergy(){}
@@ -29,11 +29,11 @@ void ExcitationEnergy::SetParametersALADIN(G4double e0_in, G4double sigma0_in, G
     sigma0 = sigma0_in;
     b0 = b0_in;
 
-    alphaSwitch = (e0/Ebound)*(e0/Ebound);
+    alphaSwitch = (e0/Ebound)*(e0/ Ebound);
     for(int k = 0; k < 100; k++){
 	alphaSwitch = pow((e0/Ebound)*(alphaSwitch*(1-1/(G4double(initA)))+1/G4double(initA)-alphaSwitch*alphaSwitch),0.66666666666666);	
 	} 
-
+    //std::cout<<"alphaSwitch is set equal to "<<alphaSwitch<<"\n";
  }
 
 void ExcitationEnergy::SetParametersEricson(G4double g0_in) {

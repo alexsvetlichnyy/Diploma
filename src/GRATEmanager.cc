@@ -11,7 +11,7 @@ GRATEmanager::GRATEmanager()
 {  
   std::cout << "######### Abrasion-Ablation model using Glauber Monte Carlo and Geant4" <<std::endl;
   while(!NucleusInputLabel){
-    std::cout << "Please enter colliding nucleus name (side A). U, U2, Pb, Pbrw, Pbpn, Pbpnrw, Au, Aurw, Au2, Au2rw, Xe, Ag, Br, Cu, Al, O, C is available : ";
+    std::cout << "Please enter colliding nucleus name (side A). U, U2, Pb, Pbrw, Pbpn, Pbpnrw, Au, Aurw, Au2, Au2rw, Xe, Ag, Br, Cu, Al, O, Oho (for HO param.), C, He4, He3, H3 is available : ";
     std::cin >> SysA;
     NucleusInputLabel = InCond->SetSysA(SysA);
     sourceA = InCond->GetSourceA();
@@ -21,7 +21,7 @@ GRATEmanager::GRATEmanager()
   NucleusInputLabel = 0;
 
   while(!NucleusInputLabel){
-    std::cout << "Please enter colliding nucleus name (side B). U, U2, Pb, Pbrw, Pbpn, Pbpnrw, Au, Aurw, Au2, Au2rw, Xe, Ag, Br, Cu, Al, O, C is available : ";
+    std::cout << "Please enter colliding nucleus name (side B). U, U2, Pb, Pbrw, Pbpn, Pbpnrw, Au, Aurw, Au2, Au2rw, Xe, Ag, Br, Cu, Al, O, Oho (for HO param.), C, He4, He3, H3 is available : ";
     std::cin >> SysB;
     NucleusInputLabel = InCond->SetSysB(SysB);
     sourceAb = InCond->GetSourceAb();
@@ -35,6 +35,10 @@ GRATEmanager::GRATEmanager()
   std::cout<<"Input upper limit for impact parameter in fm (MB if negative) : ";
   std::cin >> upperLimitB;
    }
+  else if(0){
+      lowLimitB = 0;
+      upperLimitB = 20;
+  }
 
   std::cout<<"Do you want to calculate collisions for collider or for fixed target geometry (1 for collider, 0 for fixed target) : ";
   std::cin >> IsCollider;
@@ -144,17 +148,18 @@ void GRATEmanager::BookHisto()
 
   G4int Rmax = 20;
   G4int Num_ent = 1200;
-  histo[8] = new TH1D ("Neutron destribution A", ";R;entries", Num_ent, 0, Rmax);
-  histo[9] = new TH1D ("Proton destribution A", ";R;entries", Num_ent, 0, Rmax);
-  histo[10] = new TH1D("Neutron destribution B", ";R;entries", Num_ent, 0, Rmax);
-  histo[11] = new TH1D("Proton destribution B", ";R;entries", Num_ent, 0, Rmax);
+  histo[8] = new TH1D ("Neutron distribution A", ";R;entries", Num_ent, 0, Rmax);
+  histo[9] = new TH1D ("Proton distribution A", ";R;entries", Num_ent, 0, Rmax);
+  histo[10] = new TH1D("Neutron distribution B", ";R;entries", Num_ent, 0, Rmax);
+  histo[11] = new TH1D("Proton distribution B", ";R;entries", Num_ent, 0, Rmax);
 
   G4cout << "Histograms will be written to " << fileFullName << G4endl;
 }
 
 
 void GRATEmanager::CalcXsectNN()
-{   KinEn=InCond->GetKinEnergy();
+{   G4double shadowing = 41.5/70; //according to Eskola K.J. et al. PHYSICAL REVIEW LETTERS 125, 212301 (2020)
+    KinEn=InCond->GetKinEnergy();
     G4double KinEnAtFixTarget = 0;
     if(IsCollider){KinEnAtFixTarget = (KinEn*KinEn/(2*nucleonAverMass*GeV*G4double(sourceA))) - 2*nucleonAverMass*GeV*G4double(sourceA);}
     else{KinEnAtFixTarget = KinEn;}
@@ -180,6 +185,7 @@ else{
     else{S = 4*nucleonAverMass*GeV*nucleonAverMass*GeV+2*(KinEn/G4double(sourceA))*nucleonAverMass*GeV;}
    XsectNN = 25.0+0.146*pow(log(S/(GeV*GeV)),2);
    }
+    //XsectNN *= shadowing;
 }
 
 void GRATEmanager::CalcNucleonDensity(TObjArray* nucleons_pre, G4double b)

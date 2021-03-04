@@ -6,7 +6,6 @@ A(A_in), Z(Z_in)
 };
 
 GMSTCluster::~GMSTCluster(){
-
 };
 
 GMSTClustering::GMSTClustering(){
@@ -18,7 +17,6 @@ CritDist = CD_in;
 };
 
 GMSTClustering::~GMSTClustering(){
-
 };
 
 Graph GMSTClustering::ClusterToGraph(TObjArray* nucleons, G4double A){

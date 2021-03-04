@@ -1,0 +1,14 @@
+/home/alexsvetlichnyy/INR/Code/AAMCC/build/CMakeFiles/install/strip.dir
+/home/alexsvetlichnyy/INR/Code/AAMCC/build/CMakeFiles/install/local.dir
+/home/alexsvetlichnyy/INR/Code/AAMCC/build/CMakeFiles/install.dir
+/home/alexsvetlichnyy/INR/Code/AAMCC/build/CMakeFiles/list_install_components.dir
+/home/alexsvetlichnyy/INR/Code/AAMCC/build/CMakeFiles/rebuild_cache.dir
+/home/alexsvetlichnyy/INR/Code/AAMCC/build/CMakeFiles/edit_cache.dir
+/home/alexsvetlichnyy/INR/Code/AAMCC/build/CMakeFiles/GRATE.dir
+/home/alexsvetlichnyy/INR/Code/AAMCC/build/TGlauber/CMakeFiles/install/strip.dir
+/home/alexsvetlichnyy/INR/Code/AAMCC/build/TGlauber/CMakeFiles/install/local.dir
+/home/alexsvetlichnyy/INR/Code/AAMCC/build/TGlauber/CMakeFiles/install.dir
+/home/alexsvetlichnyy/INR/Code/AAMCC/build/TGlauber/CMakeFiles/list_install_components.dir
+/home/alexsvetlichnyy/INR/Code/AAMCC/build/TGlauber/CMakeFiles/rebuild_cache.dir
+/home/alexsvetlichnyy/INR/Code/AAMCC/build/TGlauber/CMakeFiles/edit_cache.dir
+/home/alexsvetlichnyy/INR/Code/AAMCC/build/TGlauber/CMakeFiles/TGlauberLib.dir

@@ -15,6 +15,7 @@ InitialConditions::InitialConditions(G4double KinEn_in, G4String SysA_in, G4Stri
     else if(SysA_in == "Pbpnrw"){sourceA = 208; sourceZ = 82; SysA = SysA_in;}
     else if(SysA_in == "Cu"){SysA+="2";sourceA = 64; sourceZ = 29; SysA = SysA_in;}
     else if(SysA_in == "O"){sourceA = 16; sourceZ = 8; SysA = SysA_in;}
+    else if(SysA_in == "Oho"){sourceA = 16; sourceZ = 8; SysA = SysA_in;}
     else if(SysA_in == "Au"){sourceA = 197; sourceZ = 79; SysA = SysA_in;}
     else if(SysA_in == "Ag"){sourceA = 109; sourceZ = 47; SysA = SysA_in;}
     else if(SysA_in == "Br"){sourceA = 79; sourceZ = 35; SysA = SysA_in;}
@@ -23,6 +24,9 @@ InitialConditions::InitialConditions(G4double KinEn_in, G4String SysA_in, G4Stri
     else if(SysA_in == "Al"){sourceA = 27; sourceZ = 13; SysA = SysA_in;}
     else if(SysA_in == "U"){sourceA = 238; sourceZ = 92; SysA = SysA_in;}
     else if(SysA_in == "U2"){sourceA = 238; sourceZ = 92; SysA = SysA_in;}
+    else if(SysA_in == "He4"){sourceA = 4; sourceZ = 2; SysA = SysA_in;}
+    else if(SysA_in == "He3"){sourceA = 4; sourceZ = 2; SysA = SysA_in;}
+    else if(SysA_in == "H3"){sourceA = 3; sourceZ = 1; SysA = SysA_in;}
     else{ G4Exception("Nucleus input in GRATE", "GRATE-0", FatalErrorInArgument, "There is no matched nucleus in GRATE");
     }
 
@@ -32,6 +36,7 @@ InitialConditions::InitialConditions(G4double KinEn_in, G4String SysA_in, G4Stri
     else if(SysB_in == "Pbpnrw"){sourceAb = 208; sourceZb = 82; SysB = SysB_in;}
     else if(SysB_in == "Cu"){SysB+="2";sourceAb = 64; sourceZb = 29; SysB = SysB_in;}
     else if(SysB_in == "O") {sourceAb = 16; sourceZb = 8; SysB = SysB_in;}
+    else if(SysB_in == "Oho") {sourceAb = 16; sourceZb = 8; SysB = SysB_in;}
     else if(SysB_in == "Au"){sourceAb = 197; sourceZb = 79; SysB = SysB_in;}
     else if(SysB_in == "Ag"){sourceAb = 109; sourceZb = 47; SysB = SysB_in;}
     else if(SysB_in == "Br"){sourceAb = 79; sourceZb = 35; SysB = SysB_in;}
@@ -40,6 +45,9 @@ InitialConditions::InitialConditions(G4double KinEn_in, G4String SysA_in, G4Stri
     else if(SysB_in == "Al"){sourceAb = 27; sourceZb = 13; SysB = SysB_in;}
     else if(SysB_in == "U") {sourceAb = 238; sourceZb = 92; SysB = SysB_in;}
     else if(SysB_in == "U2"){sourceAb = 238; sourceZb = 92; SysB = SysB_in;}
+    else if(SysB_in == "He4"){sourceAb = 4; sourceZb = 2; SysB = SysB_in;}
+    else if(SysB_in == "He3"){sourceAb = 3; sourceZb = 2; SysB = SysB_in;}
+    else if(SysB_in == "H3"){sourceAb = 3; sourceZb = 1; SysB = SysB_in;}
     else{ G4Exception("Nucleus input in GRATE", "GRATE-0", FatalErrorInArgument, "There is no matched nucleus in GRATE");
     }
 
@@ -63,6 +71,7 @@ G4bool InitialConditions::SetSysA(G4String SysA_in) {
     else if(SysA_in == "Pbpnrw"){sourceA = 208; sourceZ = 82; SysA = SysA_in;}
     else if(SysA_in == "Cu"){sourceA = 64; sourceZ = 29; SysA = SysA_in; SysA+="2";}
     else if(SysA_in == "O"){sourceA = 16; sourceZ = 8; SysA = SysA_in;}
+    else if(SysA_in == "Oho"){sourceA = 16; sourceZ = 8; SysA = SysA_in;}
     else if(SysA_in == "Au"){sourceA = 197; sourceZ = 79; SysA = SysA_in;}
     else if(SysA_in == "Aurw"){sourceA = 197; sourceZ = 79; SysA = SysA_in;}
     else if(SysA_in == "Au2"){sourceA = 197; sourceZ = 79; SysA = SysA_in;}
@@ -74,6 +83,9 @@ G4bool InitialConditions::SetSysA(G4String SysA_in) {
     else if(SysA_in == "Al"){sourceA = 27; sourceZ = 13; SysA = SysA_in;}
     else if(SysA_in == "U"){sourceA = 238; sourceZ = 92; SysA = SysA_in;}
     else if(SysA_in == "U2"){sourceA = 238; sourceZ = 92; SysA = SysA_in;}
+    else if(SysA_in == "He4"){sourceA = 4; sourceZ = 2; SysA = SysA_in;}
+    else if(SysA_in == "He3"){sourceA = 3; sourceZ = 2; SysA = SysA_in;}
+    else if(SysA_in == "H3"){sourceA = 3; sourceZ = 1; SysA = SysA_in;}
     else{ G4Exception("Nucleus input in GRATE", "GRATE-0", JustWarning, "There is no matched nucleus in GRATE");
         return 0;
     }
@@ -88,6 +100,7 @@ G4bool InitialConditions::SetSysB(G4String SysB_in) {
     else if(SysB_in == "Pbpnrw"){sourceAb = 208; sourceZb = 82; SysB = SysB_in;}
     else if(SysB_in == "Cu"){sourceAb = 64; sourceZb = 29; SysB = SysB_in; SysB+="2";}
     else if(SysB_in == "O") {sourceAb = 16; sourceZb = 8; SysB = SysB_in;}
+    else if(SysB_in == "Oho") {sourceAb = 16; sourceZb = 8; SysB = SysB_in;}
     else if(SysB_in == "Au"){sourceAb = 197; sourceZb = 79; SysB = SysB_in;}
     else if(SysB_in == "Aurw"){sourceAb = 197; sourceZb = 79; SysB = SysB_in;}
     else if(SysB_in == "Au2"){sourceAb = 197; sourceZb = 79; SysB = SysB_in;}
@@ -99,6 +112,9 @@ G4bool InitialConditions::SetSysB(G4String SysB_in) {
     else if(SysB_in == "Al"){sourceAb = 27; sourceZb = 13; SysB = SysB_in;}
     else if(SysB_in == "U") {sourceAb = 238; sourceZb = 92; SysB = SysB_in;}
     else if(SysB_in == "U2"){sourceAb = 238; sourceZb = 92; SysB = SysB_in;}
+    else if(SysB_in == "He4"){sourceAb = 4; sourceZb = 2; SysB = SysB_in;}
+    else if(SysB_in == "He3"){sourceAb = 3; sourceZb = 2; SysB = SysB_in;}
+    else if(SysB_in == "H3"){sourceAb = 3; sourceZb = 1; SysB = SysB_in;}
     else{ G4Exception("Nucleus input in GRATE", "GRATE-0", JustWarning, "There is no matched nucleus in GRATE");
         return 0;
     }

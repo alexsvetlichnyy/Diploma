@@ -74,9 +74,9 @@
 #include "G4VFermiBreakUp.hh"
 #include "G4FermiFragmentsPoolVI.hh"
 
-#include "G4VEvaporation.hh"
-#include "G4VEvaporationChannel.hh"
-#include "G4Evaporation.hh"
+#include "../Evaporation/include/G4VEvaporation.hh"
+#include "../Evaporation/include/G4VEvaporationChannel.hh"
+#include "../Evaporation/include/G4Evaporation.hh"
 #include "G4PhotonEvaporation.hh"
 #include "G4StatMF.hh"
 #include "G4FermiBreakUpVI.hh"
@@ -102,11 +102,10 @@ G4ExcitationHandler::G4ExcitationHandler()
   results.reserve(30);
   theEvapList.reserve(30);
   thePhotoEvapList.reserve(10);
-
   SetParameters();
   electron = G4Electron::Electron();
   
-  if(fVerbose > -1) { G4cout << "### New handler " << this << G4endl; }
+  if(fVerbose > 1) { G4cout << "### New handler " << this << G4endl; }
 }
 
 G4ExcitationHandler::~G4ExcitationHandler()
