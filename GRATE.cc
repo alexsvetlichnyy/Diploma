@@ -129,6 +129,11 @@ int main()
   G4int Ncollpn;
   G4int Ncollnn;
 
+  G4float PhiRotA;
+  G4float ThetaRotA;
+  G4float PhiRotB;
+  G4float ThetaRotB;
+
   std::vector<G4int> A_cl;
   std::vector<G4int> Z_cl;
   std::vector<G4int> Ab_cl;
@@ -147,6 +152,8 @@ int main()
   histoManager.GetTree()->Branch("Ncollpp", &Ncollpp, "Ncollpp/I");
   histoManager.GetTree()->Branch("Ncollpn", &Ncollpn, "Ncollpn/I");
   histoManager.GetTree()->Branch("Ncollnn", &Ncollnn, "Ncollnn/I");
+
+
 
   histoManager.GetTreeMST()->Branch("A_cl", "std::vector" ,&A_cl);
   histoManager.GetTreeMST()->Branch("Z_cl", "std::vector" ,&Z_cl);
@@ -167,6 +174,12 @@ if(histoManager.WriteMomentum()){
 }
 
 histoManager.GetTree()->Branch("impact_parameter", &b, "impact_parameter/f");
+
+histoManager.GetTree()->Branch("PhiRotA", &PhiRotA, "PhiRotA/f");
+histoManager.GetTree()->Branch("ThetaRotA", &ThetaRotA, "ThetaRotA/f");
+histoManager.GetTree()->Branch("PhiRotB", &PhiRotB, "PhiRotB/f");
+histoManager.GetTree()->Branch("ThetaRotB", &ThetaRotB, "ThetaRotB/f");
+
 histoManager.GetTree()->Branch("Ex_En_per_nucleon", &ExEn, "Ex_En_per_nucleon/f");
 
 //Get Z and A of nuclei
@@ -186,7 +199,7 @@ clusters->SetCD(histoManager.GetCriticalDistance());
 //Setting up ExcitationHandler
 DeexcitationHandler* handlerNew = new DeexcitationHandler(); //bad_alloc while initializing with new
 //handlerNew->SetMinEForMultiFrag(3*MeV);
-handlerNew->SetMaxAandZForFermiBreakUp(19, 9);//19,9
+handlerNew->SetMaxAandZForFermiBreakUp(19, 9);
 handlerNew->SetMinExcitation(0.0001);
 //Setting up Glauber code
 histoManager.CalcXsectNN();
@@ -247,9 +260,14 @@ for(G4int count=0;count<histoManager.GetIterations() ;count++){
 
   //Side A $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   TGlauNucleus *nucA   = mcg->GetNucleusA(); 
+  TGlauNucleus *nucB = mcg->GetNucleusB();
   G4int NpartA = mcg->GetNpartA(); 
   G4int NpartB = mcg->GetNpartB();
   b = mcg->GetB();
+  PhiRotA = nucA->GetPhiRot();
+  ThetaRotA = nucA->GetThetaRot();
+  PhiRotB = nucB->GetPhiRot();
+  ThetaRotB = nucB->GetThetaRot();
   Nhard = mcg->GetNhard();
   Nvoid = mcg->GetNvoid();
   Ncoll = mcg->GetNcoll();
